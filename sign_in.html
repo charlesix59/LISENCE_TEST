@@ -1,0 +1,208 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" />
+		<meta content="text/html" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="referrer" content="no-referrer">
+		<style type="text/css">
+			.mainlog{
+				color: white;
+				width:40rem;
+				position: relative;
+				left: 40%;
+				background-color:#bd1c21;
+				height:200px;
+				text-align: center;
+				padding: 0.9375rem;
+				background: 
+				              linear-gradient(-60deg,transparent 100px, #bd1c21 0)bottom right,
+				              linear-gradient(-120deg,transparent 100px, #bd1c21 0)top right,
+				              linear-gradient(120deg,transparent 100px, #bd1c21 0)top left,
+				              linear-gradient(60deg,transparent 100px, #bd1c21 0)bottom left;
+				              background-size: 50% 50%;
+				              background-repeat: no-repeat;
+				  }
+			}
+			html,body{
+				height: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			body{
+				padding: 0rem;
+				margin: 0rem;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.dim{
+				transition:1s;
+				background-color: rgba(0, 0, 0, 0.5);
+				height: 100%;
+				padding: 0rem;
+				margin: 0rem;
+			}
+			input.in{
+				width: 15rem;
+				height: 1.7rem;
+				font-size: 1rem;
+				border: 0.15625rem solid whitesmoke;
+				border-radius: 0.3125rem;
+				color: #000000;
+			}
+			h1.re{
+				margin: 12rem;
+				font-size: 25rem;
+			}
+			input.in2{
+				width: 15rem;
+				height: 1.7rem;
+				font-size: 1rem;
+				border: 0.15625rem solid black;
+				border-radius: 0.3125rem;
+				color: #000000;
+			}
+		</style>
+		<script src="jquery-3.6.0.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.css">
+	</head>
+    <body background="background.png">
+		<div id="dimdiv">
+			<br />
+			<br />
+			<br />
+			<br />
+			<div class="mainlog" id="log_in">
+					登錄
+				<br />
+				<br />
+				<form action="ensure.php"  method="post">
+				<input class="in" type="text" value="" name="account" onclick="dim()">
+				<br />
+				<br />
+				<input class="in" type="password" name="word" onclick="privite()">
+				<br />
+				<br />
+				<input style="color: white;background-color: #BD1C21;" type="submit" value="sign in">
+				&nbsp;&nbsp;
+				<input style="color: white;background-color: #BD1C21;" type="button" value="register" data-toggle="modal" data-target="#myModal">
+				</form>
+			</div>
+			
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">register</h4>
+			      </div>
+			      <div class="modal-body" style="text-align: center;">
+					  <form action="reg.php"  method="post">
+						  ID：<input class="in2" type="text" value="" id="account" name="account">
+						  <br />
+						  <p style="margin: 0rem;" id="alerttext1" style="color: #000000;">&nbsp;</p>
+						  password:<input class="in2" id="password" value="" type="password" name="word">
+						  <br />
+						  <p style="margin: 0rem;" id="alerttext2" style="color: #000000;">&nbsp;</p>
+						  repeat password:<input class="in2" id="repassword" value="" type="password" name="word">
+						  <p style="margin: 0rem;" id="alerttext3" style="color: #000000;">&nbsp;</p>
+						  <input type="submit" value="submit" />
+					  </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<script src="js/bootstrap.min.js"></script>
+			<script>
+				$(document).ready(function(){
+					$("#password").keyup(function(){
+						var pass= $('#password').val();
+						//alert(pass);
+						if(pass.length<8){
+							document.getElementById("alerttext2").innerHTML="the password must longer than 8";
+						}
+						else if(pass.length>25){
+							document.getElementById("alerttext2").innerHTML="the password must shorter than 25";
+						}
+						else{
+							document.getElementById("alerttext2").innerHTML="&nbsp;";
+						}
+					});
+				});
+				function check_other_char(str)
+				{
+				    var arr = ["&", "\\", "/", "*", ">", "<", "@", "!"];
+				    for (var i = 0; i < arr.length; i++)
+				    {
+				        for (var j = 0; j < str.length; j++)
+				        {
+				            if (arr[i] == str.charAt(j))
+				            {
+				                return true;
+				            }
+				        }
+				    }   
+				    return false;
+				}
+				$(document).ready(function(){
+					$("#account").keyup(function(){
+						var acc= $("#account").val();
+						//alert(acc);
+						if(acc.length>25){
+							document.getElementById("alerttext1").innerHTML="the account must shorter than 25";
+						}
+						else if(check_other_char(acc)){
+							document.getElementById("alerttext1").innerHTML="can't contain special char";
+						}
+						else{
+							document.getElementById("alerttext1").innerHTML="&nbsp;";
+						}
+					});
+				});
+				$(document).ready(function(){
+					$("#repassword").keyup(function(){
+						var repass= $("#repassword").val();
+						var bepass= $("#password").val();
+						//alert(acc);
+						if(repass!=bepass){
+							document.getElementById("alerttext3").innerHTML="your enter different password";
+						}
+						else{
+							document.getElementById("alerttext3").innerHTML="&nbsp;";
+						}
+					});
+				});
+			</script>
+		</div>
+		<script>
+			let count=0;
+			function privite()
+			{
+				if(count===0){
+					let log=document.getElementById("log_in");
+					log.style="transition:1s;transform:translateY(350px)"
+					let dive=document.getElementById("dimdiv");
+					dive.style="background-color:rgba(0, 0, 0, 0.9)";
+					let jimi = document.createElement("h1");
+					jimi.className="re";
+					jimi.style="color: #BD1C21;text-align:center;";
+					jimi.innerHTML="極&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;秘";
+					document.getElementById("dimdiv").appendChild(jimi);
+					count=1;
+				}
+			}
+			function dim(){
+				let dive=document.getElementById("dimdiv");
+				dive.className="dim";
+			}
+		</script>
+    </body>
+</html>
